@@ -43,7 +43,8 @@ f.quantity,
 c.customer_key,
 c.customer_number,
 CONCAT(c.first_name, ' ', c.last_name) AS customer_name,
-DATEDIFF(year, c.birthdate, GETDATE()) age
+DATEDIFF(year, c.birthdate, GETDATE()) age,
+c.country
 FROM gold.fact_sales f
 LEFT JOIN gold.dim_customers c
 ON c.customer_key = f.customer_key
@@ -58,6 +59,7 @@ SELECT
 	customer_number,
 	customer_name,
 	age,
+	country,
 	COUNT(DISTINCT order_number) AS total_orders,
 	SUM(sales_amount) AS total_sales,
 	SUM(quantity) AS total_quantity,
@@ -68,6 +70,7 @@ FROM base_query
 GROUP BY 
 	customer_key,
 	customer_number,
+	country,
 	customer_name,
 	age
 )
@@ -75,6 +78,7 @@ SELECT
 customer_key,
 customer_number,
 customer_name,
+country,
 age,
 CASE 
 	 WHEN age < 20 THEN 'Under 20'
