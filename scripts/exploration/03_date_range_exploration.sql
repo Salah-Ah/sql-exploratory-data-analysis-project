@@ -25,3 +25,18 @@ SELECT
     MAX(birthdate) AS youngest_birthdate,
     DATEDIFF(YEAR, MAX(birthdate), GETDATE()) AS youngest_age
 FROM gold.dim_customers;
+
+/*
+=============================
+Date Exploration short report
+=============================
+
+*/
+select 'Birth_date_Range', cast(MIN(birthdate) as nvarchar) +' ->> ' + cast(MAX(birthdate)  as nvarchar) from gold.dim_customers
+union all
+select 'youngest_oldest_ages', cast(DATEDIFF(YEAR,MAX(birthdate),GETDATE())  as nvarchar)+' ->> ' + cast(DATEDIFF(YEAR,MIN(birthdate),GETDATE())  as nvarchar) from gold.dim_customers
+union all
+SELECT 'order_date_Range', CAST(MIN(order_date) AS NVARCHAR) +' ->> ' + CAST(MAX(order_date) AS NVARCHAR) FROM gold.fact_sales
+UNION ALL
+SELECT 'Shipping_date_Range', CAST(MIN(shipping_sate) AS NVARCHAR) +' ->> ' + CAST(MAX(shipping_sate) AS NVARCHAR)FROM gold.fact_sales
+
