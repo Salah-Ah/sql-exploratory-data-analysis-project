@@ -1,504 +1,476 @@
-# SQL Exploratory Data Analysis Project
+# Bike Store Sales Analytics: End-to-End Data Solution
 
-Welcome to the SQL Exploratory Data Analysis (EDA) Project!
+**From Raw Data to Business Insights: A Complete Analytics Pipeline**
 
-This project builds on the [Data Warehouse (medallion architecture) Project](https://github.com/Salah-Ah/sql-data-warehouse-project) by performing thorough exploratory analysis and creating analytical views on the Gold layer tables. Through careful exploration and structured analysis, this project shows SQL techniques for uncovering insights and answering business questions.
-
----
-
-## Project Overview
-
-This project emphasizes data exploration and analytical reporting using SQL Server. It works with a fully modeled data warehouse (Bronze, Silver, Gold layers). The analysis explores the data structure and builds analytical views that address key business questions about customers, products, and sales performance.
-
-**Key Objectives:**
-
-- Understand the data warehouse structure and relationships
-- Measure the data size and distribution
-- Create reusable analytical views for business reporting
-- Practice various analytical techniques, including segmentation, ranking, time-series, and cumulative analysis
-- Prepare for future BI dashboard development
+This project demonstrates a full-cycle data analytics solution, starting from raw CSV files and building through a structured data warehouse, comprehensive SQL analysis, and interactive Power BI dashboards. The analysis addresses a critical business challenge: understanding and responding to significant sales decline after a period of strong growth.
 
 ---
 
-## Project Context
+## Project Background
 
-This project represents Phase 2 of a data analytics journey:
+A bike retail company operating from 2010 to early 2014 sells bikes, clothing, and accessories across multiple countries including the United States, Australia, United Kingdom, Germany, France, and Canada.
 
-- **Phase 1**: [Data Warehouse Project](https://github.com/Salah-Ah/sql-data-warehouse-project) - Established the foundational data warehouse using Medallion Architecture
-- **Phase 2**: Current Project - Exploratory analysis and view creation on the Gold layer
-- **Phase 3** (Planned): Power BI integration for interactive dashboards and in-depth business insights
+After experiencing strong growth and reaching peak sales performance in Q4 2013, the business faced an unexpected decline in early 2014. The company's leadership team needs to understand what drove this change and determine whether the business can recover and grow again.
+
+**Key Business Questions:**
+- Why did sales drop sharply in January 2014 after record performance in Q4 2013?
+- What factors contributed to the exceptional Q4 2013 performance?
+- Can the business recover and attract new customers to rebuild growth?
+- What product and market strategies should guide future decisions?
 
 ---
 
-## Technologies & Techniques
+## Project Architecture
 
-**Tools:**
-- SQL Server (Database Engine)
-- SQL Server Management Studio (SSMS)
-- T-SQL (Transact-SQL)
+This project follows a complete analytics workflow:
 
-**SQL Techniques Demonstrated:**
-- Common Table Expressions (CTEs)
-- Window Functions (RANK, ROW_NUMBER, LAG/LEAD)
-- Aggregate Functions (SUM, COUNT, AVG, MAX, MIN)
-- Complex JOINs (INNER, LEFT)
-- CASE statements for conditional logic
-- Date calculations (DATEDIFF, date arithmetic)
-- Subqueries
-- VIEW creation for reusable queries
-- GROUP BY with advanced grouping
-- ORDER BY for result ranking
+```
+Raw CSV Data
+     ↓
+┌─────────────────────────┐
+│   Bronze Layer          │  ← Raw data ingestion
+│   (Staging Tables)      │
+└─────────────────────────┘
+     ↓
+┌─────────────────────────┐
+│   Silver Layer          │  ← Data cleaning & validation
+│   (Cleaned Tables)      │
+└─────────────────────────┘
+     ↓
+┌─────────────────────────┐
+│   Gold Layer            │  ← Business-ready star schema
+│   (Fact & Dimensions)   │
+└─────────────────────────┘
+     ↓
+┌─────────────────────────┐
+│   SQL Analysis          │  ← Exploratory analysis & views
+│   (Analytical Queries)  │
+└─────────────────────────┘
+     ↓
+┌─────────────────────────┐
+│   Power BI Dashboard    │  ← Interactive visualizations
+│   (Business Intelligence)│
+└─────────────────────────┘
+```
+
+**Technologies Used:**
+- SQL Server (Data Warehouse)
+- T-SQL (ETL & Analysis)
+- Power BI (Visualization & DAX)
+- Git & GitHub (Version Control)
 
 ---
 
 ## Repository Structure
 
 ```
-sql-exploratory-data-analysis-project/
+bike-store-analytics/
 │
-├── datasets/                                    # Reference data (linked from warehouse project)
+├── data/
+│   ├── raw/                    # Original CSV files
+│   └── documentation/          # Data dictionaries
 │
-├── scripts/
-│   ├── exploration/                            # Data exploration queries
-│   │   ├── 00_init_database.sql               # Database initialization
-│   │   ├── 01_database_exploration.sql        # Schema and table structure analysis
-│   │   ├── 02_dimensions_exploration.sql      # Dimension table exploration
-│   │   ├── 03_date_range_exploration.sql      # Date range and temporal coverage
-│   │   └── 04_measures_exploration.sql        # Measure/metric exploration
+├── sql/
+│   ├── 01_warehouse/           # Data warehouse setup
+│   │   ├── bronze_layer/
+│   │   ├── silver_layer/
+│   │   └── gold_layer/
 │   │
-│   └── analysis/                               # Analytical queries and views
-│       ├── 01_magnitude_analysis.sql          # Data distribution and volume analysis
-│       ├── 02_ranking_analysis.sql            # Top/bottom performers ranking
-│       ├── 03_change_over_time_analysis.sql   # Temporal trends and patterns
-│       ├── 04_cumulative_analysis.sql         # Running totals and cumulative metrics
-│       ├── 05_performance_analysis.sql        # Performance comparison and benchmarking
-│       ├── 06_data_segmentation.sql           # Categorical grouping and segmentation
-│       ├── 07_part_to_whole_analysis.sql      # Proportion and percentage analysis
-│       ├── 08_report_customers.sql            # Customer analytical view
-│       └── 09_report_products.sql             # Product analytical view
+│   ├── 02_exploration/         # Initial data exploration
+│   │   ├── 01_database_exploration.sql
+│   │   ├── 02_dimensions_exploration.sql
+│   │   ├── 03_date_range_exploration.sql
+│   │   └── 04_measures_exploration.sql
+│   │
+│   └── 03_analysis/            # Business analysis queries
+│       ├── 01_magnitude_analysis.sql
+│       ├── 02_ranking_analysis.sql
+│       ├── 03_change_over_time_analysis.sql
+│       ├── 04_cumulative_analysis.sql
+│       ├── 05_performance_analysis.sql
+│       ├── 06_data_segmentation.sql
+│       ├── 07_part_to_whole_analysis.sql
+│       ├── 08_report_customers.sql
+│       └── 09_report_products.sql
 │
-├── README.md                                   # Project documentation (this file)
-├── LICENSE                                     # MIT License
-└── .gitignore                                  # Git ignore rules
+├── powerbi/
+│   └── bike_store_dashboard.pbix
+│
+└── README.md
 ```
 
 ---
 
-## Phase 1: Exploration
+## Data Structure
 
-The exploration phase lays a foundational understanding of the data warehouse structure, content, and relationships.
+The source data consists of four tables with 108,127 total records:
 
-### 00. Database Initialization
-**Purpose**: Set up the database context for exploration.
+**Orders Table:**
+- `customer_id`, `id`, `purchase_ts`, `product_id`, `product_name`
+- `currency`, `local_price`, `usd_price`, `purchase_platform`
 
-**Key Actions**:
-- Connect to the data warehouse database
-- Verify Gold layer schema and objects
+**Customers Table:**
+- `id`, `marketing_channel`, `account_creation_method`
+- `country_code`, `loyalty_program`, `created_on`
 
-**[View Script](https://github.com/Salah-Ah/sql-exploratory-data-analysis-project/blob/main/scripts/exploration/00_init_database.sql)**
+**Geo_Lookup Table:**
+- `country`, `region`
 
----
+**Order_Status Table:**
+- `order_id`, `purchase_ts`, `ship_ts`, `delivery_ts`, `refund_ts`
 
-### 01. Database Exploration
-**Purpose**: Understand the overall database structure and schema organization.
-
-**What We Explore**:
-- Available schemas (gold, silver, bronze)
-- Tables and views in each schema
-- Object types and relationships
-- Naming conventions
-
-**Key Questions Answered**:
-- What tables can we analyze?
-- How are fact and dimension tables structured?
-- What views exist in the Gold layer?
-
-**[View Script](https://github.com/Salah-Ah/sql-exploratory-data-analysis-project/blob/main/scripts/exploration/01_database_exploration.sql)**
+All quality checks and data profiling queries can be found in the [exploration scripts](link-to-folder).
 
 ---
 
-### 02. Dimensions Exploration
-**Purpose**: Examine dimension tables to understand the available analytical attributes.
+## Phase 1: Data Warehouse Development
 
-**What We Explore**:
-- **Customer Dimension** (`gold.dim_customers`):
-  - Customer demographics (age, gender, country)
-  - Customer attributes and keys
-  - Data quality (null values, completeness)
-  
-- **Product Dimension** (`gold.dim_products`):
-  - Product categories and subcategories
-  - Product attributes (cost, maintenance)
-  - Product hierarchy
+Built a three-layer medallion architecture implementing best practices for data warehousing:
 
-**Key Questions Answered**:
-- What customer segments are there?
-- How many products are in each category?
-- What is the demographic distribution?
+### Bronze Layer (Staging)
+- Raw data ingestion from CSV files
+- Minimal transformation
+- Preserves source system structure
 
-**[View Script](https://github.com/Salah-Ah/sql-exploratory-data-analysis-project/blob/main/scripts/exploration/02_dimensions_exploration.sql)**
+### Silver Layer (Cleaned)
+- Data type standardization
+- Null handling and validation
+- Data quality rules applied
+- Business logic implementation
 
----
+### Gold Layer (Star Schema)
+**Fact Table:**
+- `fact_sales`: Transactional sales data with foreign keys to dimensions
 
-### 03. Date Range Exploration
-**Purpose**: Understand the data's temporal coverage.
+**Dimension Tables:**
+- `dim_customers`: Customer demographics and segments
+- `dim_products`: Product hierarchy (Category → Subcategory → Product)
+- `dim_date`: Calendar dimension for time-based analysis
+- `dim_geography`: Country and region information
 
-**What We Explore**:
-- Earliest and latest transaction dates
-- Date gaps or missing periods
-- Temporal distribution of data
+**Analytical Views:**
+- `report_customers`: Customer-level aggregations and KPIs
+- `report_products`: Product-level performance metrics
 
-**Key Questions Answered**:
-- What time period does our data cover?
-- Are there significant gaps?
-- What is the granularity of our temporal data?
-
-**[View Script](https://github.com/Salah-Ah/sql-exploratory-data-analysis-project/blob/main/scripts/exploration//03_date_range_exploration.sql)**
+[View Data Warehouse Documentation](link-to-warehouse-readme)
 
 ---
 
-### 04. Measures Exploration
-**Purpose**: Identify and understand the quantitative metrics available for analysis.
+## Phase 2: SQL Exploratory Analysis
 
-**What We Explore**:
-- Key measures in the fact table (`gold.fact_sales`):
-  - Sales amount
-  - Quantity sold
-  - Transaction counts
-  
-- Statistical properties:
-  - Min, max, average values
-  - Data ranges and outliers
-  - Handling of null values
+Conducted comprehensive exploratory analysis using advanced SQL techniques:
 
-**Key Questions Answered**:
-- What are typical order sizes?
-- What is the range of sales values?
-- Are there data quality issues with measures?
+**Analysis Types Performed:**
+- **Magnitude Analysis**: Distribution across dimensions (country, category, customer segments)
+- **Ranking Analysis**: Top/bottom performers identification
+- **Time-Series Analysis**: Trends, seasonality, and period-over-period changes
+- **Cumulative Analysis**: Running totals and year-to-date calculations
+- **Performance Analysis**: Benchmarking against averages
+- **Segmentation Analysis**: Customer categorization (VIP, Regular, New)
+- **Part-to-Whole Analysis**: Percentage contributions and proportions
 
-**[View Script](https://github.com/Salah-Ah/sql-exploratory-data-analysis-project/blob/main/scripts/exploration/04_measures_exploration.sql)**
+**SQL Techniques Demonstrated:**
+- Common Table Expressions (CTEs)
+- Window Functions (RANK, ROW_NUMBER, LAG, LEAD)
+- Advanced Aggregations
+- Complex JOINs
+- CASE statements for conditional logic
+- Date calculations and time-based grouping
 
----
-
-## Phase 2: Analysis
-
-The analysis phase builds on insights from exploration to create reusable analytical views and address specific business questions.
-
-### 01. Magnitude Analysis
-**Purpose**: Measure data and understand distribution across specific dimensions.
-
-**Analysis Type**: Part-to-Whole / Distribution
-
-**Key Analyses**:
-- Total customers by country
-- Total customers by gender
-- Total products by category
-- Average product costs by category
-- Total revenue by category
-- Total revenue by customer
-
-**SQL Techniques Used**:
-- `COUNT()`, `SUM()`, `AVG()` aggregate functions
-- `GROUP BY` for dimensional grouping
-- `ORDER BY` for ranking results
-- `LEFT JOIN` to include dimension details
-
-**Business Value**: Understand the size and distribution of customers, products, and revenue across key dimensions.
-
-**[View Script](https://github.com/Salah-Ah/sql-exploratory-data-analysis-project/blob/main/scripts/analysis/01_magnitude_analysis.sql)**
+[View SQL Analysis Scripts](link-to-analysis-folder)
 
 ---
 
-### 02. Ranking Analysis
-**Purpose**: Identify top and bottom performers across various metrics.
+## Phase 3: Power BI Dashboard
 
-**Analysis Type**: Ranking / Performance Comparison
+Developed an interactive dashboard with multiple pages providing comprehensive business insights.
 
-**Key Analyses**:
-- Top customers by total revenue
-- Top products by quantity sold
-- Top categories by revenue
-- Identification of bottom performers
+### Dashboard Overview
 
-**SQL Techniques Used**:
-- `RANK()`, `ROW_NUMBER()` window functions
-- `TOP N` queries
-- Ordering and filtering for rankings
+![Dashboard Overview](image-link)
 
-**Business Value**: Identify high-value customers and best-selling products for focused marketing and inventory management.
-
-**[View Script](https://github.com/Salah-Ah/sql-exploratory-data-analysis-project/blob/main/scripts/analysis/02_ranking_analysis.sql)**
+**Key Metrics at a Glance:**
+- **Total Sales**: $29.36M
+- **Total Cost**: $17.67M
+- **Total Profit**: $11.69M
+- **Total Quantity Sold**: 60,400 units
+- **Gross Margin**: 39.81%
+- **ROI**: 66.13%
 
 ---
 
-### 03. Change Over Time Analysis
-**Purpose**: Analyze trends, patterns, and changes in data over time.
+## Executive Summary
 
-**Analysis Type**: Time-Series / Temporal Analysis
+### Overview of Findings
 
-**Key Analyses**:
-- Monthly sales trends
-- Year-over-year growth rates
-- Seasonal patterns
-- Period-over-period comparisons
+The business experienced significant growth from 2010 through 2013, with sales peaking in December 2013 at $1.25M monthly revenue. However, January 2014 showed only $0.05M in sales, representing a sharp decline that raised concerns about business sustainability.
 
-**SQL Techniques Used**:
-- Date functions (`YEAR()`, `MONTH()`, `DATEDIFF()`)
-- `LAG()`, `LEAD()` window functions for period comparisons
-- Grouping by time periods
-- Percentage change calculations
-
-**Business Value**: Identify growth trends, seasonal patterns, and assist in forecasting.
-
-**[View Script](https://github.com/Salah-Ah/sql-exploratory-data-analysis-project/blob/main/scripts/analysis/03_change_over_time_analysis.sql)**
+**Key Performance Trends:**
+- Sales grew steadily from Q4 2010 ($1.42M quarterly) to Q4 2013 ($5.33M quarterly)
+- Peak monthly performance: December 2013 with $1.25M revenue
+- January 2014: Only $0.05M revenue (partial data - single month, not full quarter)
+- Overall period generated $29.36M in sales with 39.81% gross margin
 
 ---
 
-### 04. Cumulative Analysis
-**Purpose**: Calculate running totals and cumulative metrics over time.
+## Deep-Dive Insights
 
-**Analysis Type**: Cumulative / Running Total
+### Sales Performance Analysis
 
-**Key Analyses**:
-- Running total of sales
-- Cumulative revenue by date
-- Year-to-date (YTD) calculations
-- Progressive accumulation metrics
+![Sales Performance Dashboard](image-link)
 
-**SQL Techniques Used**:
-- `SUM() OVER()` window function with frame clauses
-- Ordered window frames
-- Partition-based cumulative calculations
+**Sales Distribution by Category:**
+- **Bikes**: $28.32M (96.5% of total sales)
+- **Accessories**: $0.70M (2.4%)
+- **Clothing**: $0.34M (1.2%)
 
-**Business Value**: Track progress toward goals, visualize growth, and monitor cumulative performance.
+The business is heavily dependent on bike sales, with accessories and clothing representing minimal revenue contribution.
 
-**[View Script](https://github.com/Salah-Ah/sql-exploratory-data-analysis-project/blob/main/scripts/analysis/04_cumulative_analysis.sql)**
+**Sales Growth Over Time:**
+- Started at near-zero in Q4 2010
+- Steady quarterly growth through 2011-2012
+- Accelerated growth in 2013
+- Q4 2013 peak: $5.33M (highest quarterly revenue)
+- January 2014: $0.05M (dramatic drop)
 
----
+**Customer Segmentation Performance:**
+- **New Customers**: $11.09M (37.8% of sales)
+- **VIP Customers**: $10.76M (36.6%)
+- **Regular Customers**: $7.51M (25.6%)
 
-### 05. Performance Analysis
-**Purpose**: Compare performance across entities and identify differences from benchmarks.
+The business relies heavily on new customer acquisition rather than repeat purchases, creating sustainability challenges.
 
-**Analysis Type**: Comparative Performance / Benchmarking
+**Geographic Distribution:**
+- **United States**: $9.16M (31.2% of total sales)
+- **Australia**: $9.06M (30.9%)
+- **United Kingdom**: $3.39M (11.5%)
+- **Germany**: $2.89M (9.8%)
+- **France**: $2.64M (9.0%)
+- **Canada**: $1.98M (6.7%)
 
-**Key Analyses**:
-- Product performance vs. category average
-- Customer spending vs. segment average
-- Performance variance identification
-- Deviation from benchmarks
+Sales are concentrated in the US and Australia, representing over 60% of total revenue.
 
-**SQL Techniques Used**:
-- `AVG() OVER()` for calculating benchmarks
-- Comparison logic with `CASE` statements
-- Subqueries for reference calculations
+**Customer Demographics:**
+- **Age 50+**: 66.45% of sales
+- **Age 40-49**: 32.59%
+- **Age 30-39**: 0.95%
 
-**Business Value**: Identify overperformers and underperformers, set realistic targets, and highlight exceptional performance.
-
-**[View Script](https://github.com/Salah-Ah/sql-exploratory-data-analysis-project/blob/main/scripts/analysis/05_performance_analysis.sql)**
-
----
-
-### 06. Data Segmentation
-**Purpose**: Group and categorize data into meaningful segments for targeted analysis.
-
-**Analysis Type**: Segmentation / Categorization
-
-**Key Analyses**:
-- Customer segmentation (VIP, Regular, New)
-- Age group categorization
-- Product tier classification
-- Geographic segmentation
-
-**SQL Techniques Used**:
-- `CASE` statements for conditional logic
-- Custom segmentation rules
-- Multi-level categorization
-
-**Business Value**: Enable targeted marketing strategies, personalized customer experiences, and tailored product offerings.
-
-**[View Script](https://github.com/Salah-Ah/sql-exploratory-data-analysis-project/blob/main/scripts/analysis/06_data_segmentation.sql)**
+The customer base is predominantly older adults (50+), indicating potential market saturation risk.
 
 ---
 
-### 07. Part-to-Whole Analysis
-**Purpose**: Calculate proportions and understand how parts contribute to the whole.
+### Cost Performance Analysis
 
-**Analysis Type**: Proportion / Percentage Contribution
+![Cost Performance Dashboard](image-link)
 
-**Key Analyses**:
-- Category contribution to total revenue (%)
-- Customer contribution to total sales (%)
-- Geographic distribution percentages
-- Product mix analysis
+**Cost Structure by Category:**
+- **Bikes**: $17.21M (97.4% of total cost)
+- **Accessories**: $0.26M (1.5%)
+- **Clothing**: $0.20M (1.1%)
 
-**SQL Techniques Used**:
-- `SUM() OVER()` for total calculations
-- Percentage calculations
-- Ratio analysis
+Cost structure mirrors sales distribution, with bikes dominating spending.
 
-**Business Value**: Understand which segments drive the most value and inform resource allocation.
+**Top 10 Products by Cost:**
+All top 10 cost drivers are bike models (Mountain-200 and Road-150 series), with individual products costing between $0.64M and $0.78M.
 
-**[View Script](https://github.com/Salah-Ah/sql-exploratory-data-analysis-project/blob/main/scripts/analysis/07_part_to_whole_analysis.sql)**
+**Geographic Cost & ROI Analysis:**
+- **Australia**: $5.52M cost, 64.19% ROI
+- **United States**: $5.45M cost, 65.52% ROI
+- **United Kingdom**: $2.05M cost, 65.71% ROI
+- **Germany**: $1.75M cost, 65.04% ROI
+- **France**: $1.60M cost, 65.04% ROI
+- **Canada**: $1.17M cost, 69.62% ROI
 
----
+ROI is remarkably consistent across markets (64-70%), suggesting uniform pricing and cost strategies.
 
-### 08. Customer Report View
-**Purpose**: Create a consolidated, reusable customer analytical view for reporting.
+**Top Subcategories by Cost:**
+- **Road Bikes**: $9.22M
+- **Mountain Bikes**: $5.60M
+- **Touring Bikes**: $2.39M
 
-**View**: `gold.report_customers`
-
-**What It Provides**:
-- Customer demographic information (name, age, gender, country)
-- Customer segmentation (VIP, Regular, New)
-- Customer-level aggregations:
-  - Total orders
-  - Total sales
-  - Total quantity purchased
-  - Total products purchased
-  - Lifespan (in months)
-- Calculated KPIs:
-  - Recency (months since last order)
-  - Average order value (AOV)
-  - Average monthly spend
-
-**SQL Techniques Used**:
-- CTEs for multi-step logic
-- Complex `CASE` statements for segmentation
-- Multiple joins across fact and dimension tables
-- Aggregate functions with `GROUP BY`
-- Date calculations for temporal metrics
-
-**Business Value**: A single source of truth for customer analytics, ready for BI tools and reporting.
-
-**[View Script](https://github.com/Salah-Ah/sql-exploratory-data-analysis-project/blob/main/scripts/analysis/08_report_customers.sql)**
+These three subcategories account for $17.21M of the $17.67M total cost.
 
 ---
 
-### 09. Product Report View
-**Purpose**: Create a consolidated, reusable product analytical view for reporting.
+### Profit Performance Analysis
 
-**View**: `gold.report_products`
+![Profit Performance Dashboard](image-link)
 
-**What It Provides**:
-- Product information (name, category, subcategory, cost)
-- Product-level aggregations:
-  - Total orders containing the product
-  - Total quantity sold
-  - Total revenue generated
-- Calculated KPIs:
-  - Average selling price
-  - Profit margin
-  - Revenue contribution (%)
+**Profit Growth Trajectory:**
+- Started at $0.02M in Q4 2010
+- Grew to $0.81M by Q4 2011
+- Reached $2.21M in Q4 2013 (peak profitability)
+- Dropped to $0.03M in January 2014
 
-**SQL Techniques Used**:
-- CTEs for query structure
-- Joins across fact and dimension tables
-- Aggregate calculations
-- Profit and margin calculations
-- Percentage contribution calculations
+**Geographic Profit Distribution:**
+- **United States**: $3.72M (31.8%)
+- **Australia**: $3.54M (30.3%)
+- **United Kingdom**: $1.34M (11.5%)
+- **Germany**: $1.15M (9.8%)
+- **France**: $1.04M (8.9%)
+- **Canada**: $0.81M (6.9%)
 
-**Business Value**: Comprehensive product performance metrics for inventory management, pricing strategies, and product development.
+Profit distribution closely mirrors sales distribution, indicating consistent margins across markets.
 
-**[View Script](https://github.com/Salah-Ah/sql-exploratory-data-analysis-project/blob/main/scripts/analysis/09_report_products.sql)**
+**Profit by Customer Age Group:**
+- **Age 50+**: 66.64% of total profit
+- **Age 40-49**: 32.42%
+- **Age 30-39**: 0.94%
 
----
+Profitability is driven by older customer segments.
 
-## Analytical Methodology
+**Top 10 Products by Profit:**
+The same bike models that generate highest costs also generate highest profits:
+- Mountain-200 Black-46: $0.60M
+- Mountain-200 Black-42: $0.59M
+- Mountain-200 Silver-38: $0.58M
+- Mountain-200 Silver-46: $0.57M
 
-This project follows a clear approach to exploratory data analysis and reporting:
-
-1. **Understand the Data Structure** (Exploration Phase)
-   - Identify tables, schemas, and relationships
-   - Examine dimension attributes
-   - Assess temporal coverage
-   - Explore available measures
-
-2. **Ask Business Questions** (Analysis Planning)
-   - What patterns are in the data?
-   - Who are our most valuable customers?
-   - Which products generate the most revenue?
-   - How do metrics change over time?
-
-3. **Apply Analytical Techniques** (Analysis Execution)
-   - Use suitable SQL techniques for each analysis type
-   - Build incrementally from simple to complex queries
-   - Document assumptions and business logic
-
-4. **Create Reusable Views** (Reporting Layer)
-   - Consolidate complex logic into views
-   - Provide clean interfaces for BI tools
-   - Enable self-service analytics
-
-5. **Validate and Iterate** (Quality Assurance)
-   - Verify calculations against business rules
-   - Check for edge cases and null handling
-   - Refine based on feedback
+Top 10 products contribute approximately 40% of total profit.
 
 ---
 
-## Getting Started
+## Key Findings Summary
 
-### Prerequisites
+### Business Concentration Risks
 
-- SQL Server (Express or Developer Edition)
-- SQL Server Management Studio (SSMS)
-- Completed [Data Warehouse Project](https://github.com/Salah-Ah/sql-data-warehouse-project) with Gold layer populated
+1. **Product Concentration**: 96.5% of sales come from bikes alone, creating extreme category dependence
+2. **Customer Concentration**: Top 10 products generate 40% of sales
+3. **Geographic Concentration**: US and Australia represent 62% of revenue
+4. **Demographic Concentration**: 66% of customers are age 50+
+5. **Customer Type Dependency**: 37.8% of sales from new customers indicates low repeat purchase rates
 
-### How to Use This Project
+### Growth & Decline Pattern
 
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/Salah-Ah/sql-exploratory-data-analysis-project.git
-   ```
+- **Growth Phase (2010-2013)**: Consistent quarterly growth reaching $5.33M in Q4 2013
+- **Decline Phase (January 2014)**: Sharp drop to $0.05M monthly revenue
+- **Seasonal Pattern**: Strong Q4 performance (holiday season impact)
 
-2. **Connect to Your Data Warehouse**
-   - Open SSMS and connect to your SQL Server instance
-   - Ensure your data warehouse database is accessible
+### Profitability Metrics
 
-3. **Run Exploration Scripts**
-   - Start with `00_init_database.sql` to set the context
-   - Run exploration scripts (01-04) to understand the data
-   - Review results to familiarize yourself with the data
-
-4. **Execute Analysis Scripts**
-   - Run analysis scripts (01-09) in order
-   - Each script operates independently and can be run separately
-   - Review the VIEW definitions created
-
-5. **Query the Analytical Views**
-   - Use `gold.report_customers` and `gold.report_products` in your queries
-   - Build further analyses on top of these views
-   - Export results for reports or BI tools
+- **Gross Margin**: 39.81% (healthy for retail)
+- **ROI**: 66.13% overall (consistent 64-70% across all markets)
+- **Profit**: $11.69M over the period
 
 ---
 
-## Learning Outcomes
+## Recommendations
 
-By completing this project, you will show proficiency in:
+Based on the analysis, the following strategies are recommended:
 
-- **Exploratory Data Analysis**: Systematically understanding data structure, content, and quality
-- **SQL Mastery**: Advanced query techniques, including CTEs, window functions, and complex joins
-- **Analytical Thinking**: Selecting suitable analytical techniques for business questions
-- **View Design**: Creating reusable, maintainable analytical views
-- **Business Acumen**: Translating analysis into business insights
-- **Documentation**: Clear commenting and well-organized queries
+### 1. Diversify Product Portfolio
+**Issue**: 96.5% sales dependency on bikes creates extreme risk.
+
+**Recommendation**: Expand the accessories category with new product lines, particularly Apple charging cables and other high-margin accessories that complement existing bike purchases.
+
+**Rationale**: Accessories have lower cost structures and can provide upsell opportunities to existing bike customers.
+
+### 2. Enhance Marketing to Apple Ecosystem Users
+**Issue**: Despite strong overall Apple product sales, iPhone sales represent only 1% of revenue in 2022.
+
+**Recommendation**: Implement targeted marketing campaigns to previous Apple product buyers, emphasizing bike accessories that integrate with Apple devices.
+
+### 3. Capitalize on Samsung Accessory Demand
+**Issue**: Samsung accessories showed strong performance (32% of order count in 2022).
+
+**Recommendation**: Introduce higher-cost Samsung products in categories already carried (bikes and related electronics), such as Samsung-branded bike computers or GPS devices.
+
+### 4. Re-evaluate Underperforming Products
+**Issue**: Bose SoundSport Headphones never exceeded 1% of annual revenue.
+
+**Recommendation**: Implement bundle offers and flash sales for non-Apple ecosystem loyalty members before discontinuing. Use inventory clearance to fund new product investments.
+
+### 5. Strengthen Loyalty Program
+**Issue**: Heavy reliance on new customers (37.8% of sales) rather than repeat purchases.
+
+**Recommendation**: 
+- Offer one-time sign-up discounts for loyalty program membership
+- Increase marketing of membership benefits and savings
+- Use targeted ads to previous customers based on past purchase data
+- Implement replacement cycle marketing (bikes typically need replacement every 5-7 years)
+
+### 6. Address January 2014 Decline
+**Issue**: Dramatic sales drop in January 2014.
+
+**Recommendation**: Investigate operational issues during this period. Ensure data collection completeness. If decline is real, analyze:
+- Marketing campaign changes
+- Competitive actions
+- Economic factors
+- Website/platform technical issues
+- Inventory availability
+
 ---
 
-## 🔮 Future Enhancements
+## Technical Implementation
 
-**Phase 3 - Power BI Integration** (Planned):
-- Connect Power BI to the analytical views
-- Build interactive dashboards for customer and product analytics
-- Create visual storytelling with insights
-- Implement drill-through and filtering capabilities
-- Share reports with stakeholders
+### Data Warehouse Layer
+- **Architecture**: Medallion (Bronze → Silver → Gold)
+- **Fact Table**: Transactional sales data
+- **Dimensions**: Customers, Products, Geography, Date
+- **Total Records**: 108,127 transactions
 
-**Additional Analysis Ideas**:
-- Cohort analysis (customer retention over time)
-- RFM (Recency, Frequency, Monetary) segmentation
-- Market basket analysis (products purchased together)
-- Customer lifetime value (CLV) prediction
-- Advanced time-series forecasting
+### SQL Analysis
+- **Queries Written**: 30+ analytical queries
+- **Views Created**: 2 business reporting views
+- **Techniques**: CTEs, Window Functions, Complex Joins, Date Calculations
+
+### Power BI Dashboard
+- **Pages**: 4 analytical pages + 1 overview
+- **DAX Measures Created**:
+  - Total Sales, Total Cost, Profit
+  - Gross Margin %, ROI
+  - Category Change, Quarter Change
+  - Previous Quarter Sales, YOY comparisons
+  - Quarter Label
+  - Waterfall calculations
+
+- **Features Implemented**:
+  - Interactive bookmarks for filtering (Year, Country, Subcategory)
+  - Drill-through capabilities
+  - Dynamic titles and labels
+  - Custom tooltips
+  - Cross-page filtering
+
+### Calendar Table
+Custom date dimension with:
+- Date, DayName, DayOfWeek, IsWeekend
+- Month, MonthName, Quarter, Quarter Num
+- Year, YearQuarter
+
+---
+
+## Project Files
+
+- **Power BI Dashboard**: [Download .pbix file](https://github.com/Salah-Ah/sql-exploratory-data-analysis-project/tree/main/Power%20BI%20file)
+- **SQL Warehouse Scripts**: [View warehouse repository](https://github.com/Salah-Ah/sql-data-warehouse-project)
+- **SQL Analysis Scripts**: [View analysis queries](https://github.com/Salah-Ah/sql-exploratory-data-analysis-project)
+- **Data Files**: Available in repository `/data` folder
+
+---
+
+## Key Learnings
+
+This project demonstrates:
+
+✅ **End-to-end data pipeline development** from raw data to business insights  
+✅ **Data warehouse design** using medallion architecture  
+✅ **Advanced SQL analysis** with complex queries and business logic  
+✅ **Data modeling** with star schema design  
+✅ **Business intelligence visualization** with Power BI  
+✅ **DAX proficiency** for calculated measures and KPIs  
+✅ **Business acumen** translating data into actionable recommendations  
+✅ **Problem-solving approach** to real-world business challenges  
+
+---
+
+## Future Enhancements
+
+- **Predictive Analytics**: Implement forecasting models for sales trends
+- **Customer Lifetime Value**: Calculate CLV for customer segments
+- **Cohort Analysis**: Track customer retention over time
+- **Market Basket Analysis**: Identify product purchase patterns
+- **Automated Reporting**: Schedule and distribute reports to stakeholders
+- **Real-time Dashboard**: Connect to live data sources for current metrics
 
 ---
 
