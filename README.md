@@ -119,7 +119,7 @@ The source data consists of four tables with 108,127 total records:
 **Order_Status Table:**
 - `order_id`, `purchase_ts`, `ship_ts`, `delivery_ts`, `refund_ts`
 
-All quality checks and data profiling queries can be found in the [exploration scripts](link-to-folder).
+All quality checks and data profiling queries can be found in the [exploration scripts](https://github.com/Salah-Ah/bike-sales-analytics-project/tree/main/scripts/exploration).
 
 ---
 
@@ -152,7 +152,8 @@ Built a three-layer medallion architecture implementing best practices for data 
 - `report_customers`: Customer-level aggregations and KPIs
 - `report_products`: Product-level performance metrics
 
-[View Data Warehouse Documentation](link-to-warehouse-readme)
+[View Data Warehouse Repo](https://github.com/Salah-Ah/sql-data-warehouse-project)
+It has the Documentation and details.
 
 ---
 
@@ -177,7 +178,7 @@ Conducted comprehensive exploratory analysis using advanced SQL techniques:
 - CASE statements for conditional logic
 - Date calculations and time-based grouping
 
-[View SQL Analysis Scripts](link-to-analysis-folder)
+[View SQL Analysis Scripts](https://github.com/Salah-Ah/bike-sales-analytics-project/tree/main/scripts/analysis)
 
 ---
 
@@ -186,8 +187,7 @@ Conducted comprehensive exploratory analysis using advanced SQL techniques:
 Developed an interactive dashboard with multiple pages providing comprehensive business insights.
 
 ### Dashboard Overview
-
-![Dashboard Overview](image-link)
+<img width="1469" height="858" alt="Overview" src="https://github.com/user-attachments/assets/a9153a80-ba9d-4ab5-9c1f-079442b904f0" />
 
 **Key Metrics at a Glance:**
 - **Total Sales**: $29.36M
@@ -216,8 +216,8 @@ The business experienced significant growth from 2010 through 2013, with sales p
 ## Deep-Dive Insights
 
 ### Sales Performance Analysis
+<img width="1472" height="787" alt="Sales Page" src="https://github.com/user-attachments/assets/1e98cb40-aef3-4537-b3db-85ee65a88caa" />
 
-![Sales Performance Dashboard](image-link)
 
 **Sales Distribution by Category:**
 - **Bikes**: $28.32M (96.5% of total sales)
@@ -260,8 +260,8 @@ The customer base is predominantly older adults (50+), indicating potential mark
 ---
 
 ### Cost Performance Analysis
+<img width="1456" height="827" alt="Cost Page" src="https://github.com/user-attachments/assets/fce3dc52-ba1f-4c02-977c-250d8918e8bd" />
 
-![Cost Performance Dashboard](image-link)
 
 **Cost Structure by Category:**
 - **Bikes**: $17.21M (97.4% of total cost)
@@ -293,8 +293,8 @@ These three subcategories account for $17.21M of the $17.67M total cost.
 ---
 
 ### Profit Performance Analysis
+<img width="1432" height="813" alt="Profit Page" src="https://github.com/user-attachments/assets/00943443-579b-41d6-95ef-77e197f5125c" />
 
-![Profit Performance Dashboard](image-link)
 
 **Profit Growth Trajectory:**
 - Started at $0.02M in Q4 2010
@@ -443,7 +443,7 @@ Custom date dimension with:
 
 - **Power BI Dashboard**: [Download .pbix file](https://github.com/Salah-Ah/sql-exploratory-data-analysis-project/tree/main/Power%20BI%20file)
 - **SQL Warehouse Scripts**: [View warehouse repository](https://github.com/Salah-Ah/sql-data-warehouse-project)
-- **SQL Analysis Scripts**: [View analysis queries](https://github.com/Salah-Ah/sql-exploratory-data-analysis-project)
+- **SQL Analysis Scripts**: [View analysis queries](https://github.com/Salah-Ah/bike-sales-analytics-project/tree/main/scripts)
 - **Data Files**: Available in repository `/data` folder
 
 ---
@@ -496,8 +496,6 @@ I'm always excited to connect with fellow data enthusiasts, recruiters, and prof
 ### 📁 Related Projects
 
 - 🏗️ **[Data Warehouse Project](https://github.com/Salah-Ah/sql-data-warehouse-project)** - The foundational warehouse this project builds upon
-- 📊 **Power BI Dashboard Project** (Coming Soon) - Interactive visualizations of these analyses
-
 ---
 
 <div align="center">
