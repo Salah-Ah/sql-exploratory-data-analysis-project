@@ -356,48 +356,56 @@ Top 10 products contribute approximately 40% of total profit.
 
 ## Recommendations
 
-Based on the analysis, the following strategies are recommended:
+### ✅ 1. Reduce Product Concentration Risk
+**Action:**
+- Expand **accessories and apparel** tied directly to bike ownership (helmets, maintenance kits, apparel bundles).
 
-### 1. Diversify Product Portfolio
-**Issue**: 96.5% sales dependency on bikes creates extreme risk.
+**Why:**
+- Low-cost add-ons increase basket size and stabilize revenue without changing the core product.
 
-**Recommendation**: Expand the accessories category with new product lines, particularly Apple charging cables and other high-margin accessories that complement existing bike purchases.
+---
 
-**Rationale**: Accessories have lower cost structures and can provide upsell opportunities to existing bike customers.
+### ✅ 2. Strengthen Customer Retention
+**Action:**
+- Enhance the loyalty program with:
+  - Maintenance discounts  
+  - Service reminders  
+  - Repeat-purchase incentives  
 
-### 2. Enhance Marketing to Apple Ecosystem Users
-**Issue**: Despite strong overall Apple product sales, iPhone sales represent only 1% of revenue in 2022.
+**Why:**
+- Shifting even a small percentage from new to repeat customers reduces acquisition dependency.
 
-**Recommendation**: Implement targeted marketing campaigns to previous Apple product buyers, emphasizing bike accessories that integrate with Apple devices.
+---
 
-### 3. Capitalize on Samsung Accessory Demand
-**Issue**: Samsung accessories showed strong performance (32% of order count in 2022).
+### ✅ 3. Diversify Revenue Across Markets
+**Action:**
+- Prioritize targeted campaigns in **United Kingdom, Germany, and France**, where ROI is consistent but sales volume is lower.
 
-**Recommendation**: Introduce higher-cost Samsung products in categories already carried (bikes and related electronics), such as Samsung-branded bike computers or GPS devices.
+**Why:**
+- These markets show healthy margins and represent scalable growth opportunities.
 
-### 4. Re-evaluate Underperforming Products
-**Issue**: Bose SoundSport Headphones never exceeded 1% of annual revenue.
+---
 
-**Recommendation**: Implement bundle offers and flash sales for non-Apple ecosystem loyalty members before discontinuing. Use inventory clearance to fund new product investments.
+### ✅ 4. Rebalance Product Portfolio
+**Action:**
+- Reduce reliance on top-performing SKUs by:
+  - Promoting mid-tier models  
+  - Introducing limited or seasonal variants  
 
-### 5. Strengthen Loyalty Program
-**Issue**: Heavy reliance on new customers (37.8% of sales) rather than repeat purchases.
+**Why:**
+- This smooths revenue volatility and improves inventory resilience.
 
-**Recommendation**: 
-- Offer one-time sign-up discounts for loyalty program membership
-- Increase marketing of membership benefits and savings
-- Use targeted ads to previous customers based on past purchase data
-- Implement replacement cycle marketing (bikes typically need replacement every 5-7 years)
+---
 
-### 6. Address January 2014 Decline
-**Issue**: Dramatic sales drop in January 2014.
+### ✅ 5. Validate and Monitor the 2014 Decline
+**Action:**
+- Confirm data completeness for January 2014  
+- Monitor Q1 seasonality trends year-over-year  
+- Track marketing activity and inventory availability  
 
-**Recommendation**: Investigate operational issues during this period. Ensure data collection completeness. If decline is real, analyze:
-- Marketing campaign changes
-- Competitive actions
-- Economic factors
-- Website/platform technical issues
-- Inventory availability
+**Why:**
+- Prevents reacting to incomplete or misleading performance signals.
+
 
 ---
 
